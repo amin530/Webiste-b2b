@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowLeft, Search } from 'lucide-react'
+import { ArrowLeft, Search } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -15,29 +15,29 @@ import { useProductFiltering } from "@/hooks/use-product-filtering"
 const displaysData = [
   {
     id: "display-1",
-    name: "Samsung Odyssey G7 32\"",
+    name: 'Samsung Odyssey G7 32"',
     sku: "LC32G75TQSNXZA",
-    image: "/samsung-curved-monitor.png",
+    image: "/images/samsung-curved-monitor.png",
     description: "32-inch curved gaming monitor with 240Hz refresh rate and 1ms response time",
     category: "displays",
     brand: "samsung",
     price: 699,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "display-2",
     name: "Dell UltraSharp U2723QE",
     sku: "210-BDPH",
-    image: "/computer-monitors.png",
+    image: "/images/computer-monitors.png",
     description: "27-inch 4K USB-C hub monitor with 99% sRGB color coverage",
     category: "displays",
     brand: "dell",
     price: 549,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "display-3",
@@ -49,8 +49,8 @@ const displaysData = [
     brand: "lg",
     price: 399,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "display-4",
@@ -62,8 +62,8 @@ const displaysData = [
     brand: "asus",
     price: 329,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "display-5",
@@ -75,8 +75,8 @@ const displaysData = [
     brand: "hp",
     price: 199,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "display-6",
@@ -88,8 +88,8 @@ const displaysData = [
     brand: "benq",
     price: 1099,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "display-7",
@@ -101,8 +101,8 @@ const displaysData = [
     brand: "acer",
     price: 1799,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "display-8",
@@ -114,8 +114,8 @@ const displaysData = [
     brand: "msi",
     price: 449,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "display-9",
@@ -127,8 +127,8 @@ const displaysData = [
     brand: "viewsonic",
     price: 299,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "display-10",
@@ -140,8 +140,8 @@ const displaysData = [
     brand: "dell",
     price: 1099,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
 ]
 
@@ -203,16 +203,18 @@ function DisplaysContent() {
               {filteredDisplays.length === 0 && (
                 <div className="text-center py-12">
                   <p className="text-muted-foreground">No displays match your current filters.</p>
-                  <Button 
-                    variant="outline" 
-                    className="mt-4"
-                    onClick={() => updateFilters({ 
-                      categories: [], 
-                      brands: [], 
-                      specifications: {},
-                      priceRange: [0, 5000],
-                      searchQuery: ''
-                    })}
+                  <Button
+                    variant="outline"
+                    className="mt-4 bg-transparent"
+                    onClick={() =>
+                      updateFilters({
+                        categories: [],
+                        brands: [],
+                        specifications: {},
+                        priceRange: [0, 5000],
+                        searchQuery: "",
+                      })
+                    }
                   >
                     Clear Filters
                   </Button>

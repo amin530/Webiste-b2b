@@ -2,30 +2,30 @@
 
 import * as React from "react"
 import Image from "next/image"
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
 export function BrandCarousel() {
   const [current, setCurrent] = React.useState(0)
   const brandLogos = [
-    { name: "Apple", logo: "/apple-logo-minimalist.png" },
-    { name: "Dell", logo: "/dell-logo.png" },
-    { name: "HP", logo: "/generic-tech-logo.png" },
-    { name: "Lenovo", logo: "/lenovo-logo.png" },
-    { name: "Samsung", logo: "/samsung-logo.png" },
-    { name: "Asus", logo: "/asus-logo.png" },
-    { name: "Acer", logo: "/acer-logo.png" },
-    { name: "Microsoft", logo: "/microsoft-logo.png" },
-    { name: "LG", logo: "/lg-logo-abstract.png" },
-    { name: "Cisco", logo: "/cisco-logo.png" },
+    { name: "Apple", logo: "/images/apple-logo-minimalist.png" },
+    { name: "Dell", logo: "/images/dell-logo.png" },
+    { name: "HP", logo: "/images/generic-tech-logo.png" },
+    { name: "Lenovo", logo: "/images/lenovo-logo.png" },
+    { name: "Samsung", logo: "/images/samsung-logo.png" },
+    { name: "Asus", logo: "/images/asus-logo.png" },
+    { name: "Acer", logo: "/images/acer-logo.png" },
+    { name: "Microsoft", logo: "/images/microsoft-logo.png" },
+    { name: "LG", logo: "/images/lg-logo-abstract.png" },
+    { name: "Cisco", logo: "/images/cisco-logo.png" },
   ]
 
   const visibleBrands = React.useMemo(() => {
     const visibleCount = typeof window !== "undefined" && window.innerWidth < 768 ? 2 : 5
     const start = current % brandLogos.length
     const end = (start + visibleCount) % brandLogos.length
-    
+
     if (end > start) {
       return brandLogos.slice(start, end)
     } else {
@@ -65,23 +65,13 @@ export function BrandCarousel() {
         ))}
       </div>
       <div className="absolute inset-y-0 left-0 flex items-center">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 rounded-full bg-background/80"
-          onClick={previous}
-        >
+        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full bg-background/80" onClick={previous}>
           <ChevronLeft className="h-4 w-4" />
           <span className="sr-only">Previous slide</span>
         </Button>
       </div>
       <div className="absolute inset-y-0 right-0 flex items-center">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 rounded-full bg-background/80"
-          onClick={next}
-        >
+        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full bg-background/80" onClick={next}>
           <ChevronRight className="h-4 w-4" />
           <span className="sr-only">Next slide</span>
         </Button>

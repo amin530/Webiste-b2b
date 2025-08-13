@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowLeft, Search } from 'lucide-react'
+import { ArrowLeft, Search } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -17,7 +17,7 @@ const gamingData = [
     id: "gaming-1",
     name: "ASUS ROG Strix G15",
     sku: "G513QM-HN064T",
-    image: "/asus-gaming-pc.png",
+    image: "/images/asus-gaming-pc.png",
     description: "15.6-inch gaming laptop with AMD Ryzen 7 5800H, RTX 3060, 16GB RAM, 512GB SSD",
     category: "gaming",
     brand: "asus",
@@ -26,8 +26,8 @@ const gamingData = [
       ram: "16GB",
       storage: "512GB",
       processor: "AMD Ryzen 7",
-      graphics: "RTX 3060"
-    }
+      graphics: "RTX 3060",
+    },
   },
   {
     id: "gaming-2",
@@ -42,8 +42,8 @@ const gamingData = [
       ram: "16GB",
       storage: "512GB",
       processor: "Intel Core i7",
-      graphics: "RTX 3070"
-    }
+      graphics: "RTX 3070",
+    },
   },
   {
     id: "gaming-3",
@@ -55,8 +55,8 @@ const gamingData = [
     brand: "razer",
     price: 99,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "gaming-4",
@@ -68,8 +68,8 @@ const gamingData = [
     brand: "corsair",
     price: 199,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "gaming-5",
@@ -81,8 +81,8 @@ const gamingData = [
     brand: "nvidia",
     price: 1199,
     specifications: {
-      graphics: "RTX 4080"
-    }
+      graphics: "RTX 4080",
+    },
   },
   {
     id: "gaming-6",
@@ -94,8 +94,8 @@ const gamingData = [
     brand: "steelseries",
     price: 149,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "gaming-7",
@@ -107,8 +107,8 @@ const gamingData = [
     brand: "asus",
     price: 699,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "gaming-8",
@@ -121,8 +121,8 @@ const gamingData = [
     price: 499,
     specifications: {
       storage: "1TB",
-      graphics: "Custom RDNA 2"
-    }
+      graphics: "Custom RDNA 2",
+    },
   },
   {
     id: "gaming-9",
@@ -135,8 +135,8 @@ const gamingData = [
     price: 499,
     specifications: {
       storage: "825GB",
-      graphics: "Custom RDNA 2"
-    }
+      graphics: "Custom RDNA 2",
+    },
   },
   {
     id: "gaming-10",
@@ -148,8 +148,8 @@ const gamingData = [
     brand: "logitech",
     price: 149,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "gaming-11",
@@ -161,8 +161,8 @@ const gamingData = [
     brand: "hyperx",
     price: 99,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "gaming-12",
@@ -174,8 +174,8 @@ const gamingData = [
     brand: "amd",
     price: 899,
     specifications: {
-      graphics: "RX 7800 XT"
-    }
+      graphics: "RX 7800 XT",
+    },
   },
 ]
 
@@ -237,16 +237,18 @@ function GamingContent() {
               {filteredGaming.length === 0 && (
                 <div className="text-center py-12">
                   <p className="text-muted-foreground">No gaming products match your current filters.</p>
-                  <Button 
-                    variant="outline" 
-                    className="mt-4"
-                    onClick={() => updateFilters({ 
-                      categories: [], 
-                      brands: [], 
-                      specifications: {},
-                      priceRange: [0, 5000],
-                      searchQuery: ''
-                    })}
+                  <Button
+                    variant="outline"
+                    className="mt-4 bg-transparent"
+                    onClick={() =>
+                      updateFilters({
+                        categories: [],
+                        brands: [],
+                        specifications: {},
+                        priceRange: [0, 5000],
+                        searchQuery: "",
+                      })
+                    }
                   >
                     Clear Filters
                   </Button>

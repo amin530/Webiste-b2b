@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowLeft, Search } from 'lucide-react'
+import { ArrowLeft, Search } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -17,7 +17,7 @@ const laptopsData = [
     id: "laptop-1",
     name: "Dell XPS 13 9320",
     sku: "DXPS13-9320",
-    image: "/dell-xps-laptop.png",
+    image: "/images/dell-xps-laptop.png",
     description: "13-inch business laptop with Intel Core i7-1260P, 16GB RAM, 512GB SSD, Windows 11 Pro",
     category: "laptops",
     brand: "dell",
@@ -26,14 +26,14 @@ const laptopsData = [
       ram: "16GB",
       storage: "512GB",
       processor: "Intel Core i7",
-      graphics: "Integrated"
-    }
+      graphics: "Integrated",
+    },
   },
   {
     id: "laptop-2",
     name: "HP EliteBook 840 G9",
     sku: "EB840-G9",
-    image: "/placeholder-1ma0o.png",
+    image: "/images/hp-laptop-placeholder.png",
     description: "14-inch business laptop with Intel Core i5-1235U, 8GB RAM, 256GB SSD, Windows 11 Pro",
     category: "laptops",
     brand: "hp",
@@ -42,8 +42,8 @@ const laptopsData = [
       ram: "8GB",
       storage: "256GB",
       processor: "Intel Core i5",
-      graphics: "Integrated"
-    }
+      graphics: "Integrated",
+    },
   },
   {
     id: "laptop-3",
@@ -58,14 +58,14 @@ const laptopsData = [
       ram: "16GB",
       storage: "1TB",
       processor: "Intel Core i7",
-      graphics: "Integrated"
-    }
+      graphics: "Integrated",
+    },
   },
   {
     id: "laptop-4",
     name: "Apple MacBook Pro 14-inch",
     sku: "MBP14-M2",
-    image: "/apple-macbook-pro.png",
+    image: "/images/apple-macbook-pro.png",
     description: "14-inch MacBook Pro with M2 Pro chip, 16GB unified memory, 512GB SSD storage",
     category: "laptops",
     brand: "apple",
@@ -74,8 +74,8 @@ const laptopsData = [
       ram: "16GB",
       storage: "512GB",
       processor: "Apple M2",
-      graphics: "Integrated"
-    }
+      graphics: "Integrated",
+    },
   },
   {
     id: "laptop-5",
@@ -90,8 +90,8 @@ const laptopsData = [
       ram: "32GB",
       storage: "1TB",
       processor: "Intel Core i7",
-      graphics: "RTX 3050"
-    }
+      graphics: "RTX 3050",
+    },
   },
   {
     id: "laptop-6",
@@ -106,8 +106,8 @@ const laptopsData = [
       ram: "8GB",
       storage: "256GB",
       processor: "Intel Core i5",
-      graphics: "Integrated"
-    }
+      graphics: "Integrated",
+    },
   },
   {
     id: "laptop-7",
@@ -122,8 +122,8 @@ const laptopsData = [
       ram: "32GB",
       storage: "1TB",
       processor: "Intel Core i7",
-      graphics: "RTX A2000"
-    }
+      graphics: "RTX A2000",
+    },
   },
   {
     id: "laptop-8",
@@ -138,8 +138,8 @@ const laptopsData = [
       ram: "16GB",
       storage: "512GB",
       processor: "Intel Core i7",
-      graphics: "RTX A1000"
-    }
+      graphics: "RTX A1000",
+    },
   },
   {
     id: "laptop-9",
@@ -154,8 +154,8 @@ const laptopsData = [
       ram: "16GB",
       storage: "1TB",
       processor: "AMD Ryzen 7",
-      graphics: "RTX 3070"
-    }
+      graphics: "RTX 3070",
+    },
   },
 ]
 
@@ -217,16 +217,18 @@ function LaptopsContent() {
               {filteredLaptops.length === 0 && (
                 <div className="text-center py-12">
                   <p className="text-muted-foreground">No laptops match your current filters.</p>
-                  <Button 
-                    variant="outline" 
-                    className="mt-4"
-                    onClick={() => updateFilters({ 
-                      categories: [], 
-                      brands: [], 
-                      specifications: {},
-                      priceRange: [0, 5000],
-                      searchQuery: ''
-                    })}
+                  <Button
+                    variant="outline"
+                    className="mt-4 bg-transparent"
+                    onClick={() =>
+                      updateFilters({
+                        categories: [],
+                        brands: [],
+                        specifications: {},
+                        priceRange: [0, 5000],
+                        searchQuery: "",
+                      })
+                    }
                   >
                     Clear Filters
                   </Button>

@@ -1,140 +1,66 @@
-'use client'
+"use client"
 
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useState } from "react"
 import Link from "next/link"
-import { ArrowLeft, Save } from 'lucide-react'
+import { Building, CreditCard, Users, Bell, Shield } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Switch } from "@/components/ui/switch"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Badge } from "@/components/ui/badge"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { MainNav } from "@/components/main-nav"
 import { Footer } from "@/components/footer"
-import { useAuth } from "@/contexts/auth-context"
-import { updateBusinessProfile } from "@/lib/auth"
 
 export default function ProfilePage() {
-  const { user, businessProfile, loading, refreshProfile } = useAuth()
-  const router = useRouter()
-  const [formData, setFormData] = useState({
-    companyName: '',
-    businessType: '',
-    taxId: '',
-    yearsInBusiness: '',
-    website: '',
-    contactName: '',
-    jobTitle: '',
-    phone: '',
-    addressLine1: '',
-    addressLine2: '',
-    city: '',
-    state: '',
-    postalCode: '',
-    country: '',
-    monthlyVolume: '',
-    productInterest: '',
+  const [isEditing, setIsEditing] = useState(false)
+  const [profileData, setProfileData] = useState({
+    companyName: "ABC Technology Solutions",
+    contactName: "John Doe",
+    email: "john@abctech.com",
+    phone: "(555) 123-4567",
+    address: "123 Business Ave",
+    city: "Atlanta",
+    state: "GA",
+    zipCode: "30309",
+    businessType: "Technology Reseller",
+    taxId: "12-3456789",
+    website: "https://abctech.com",
+    description: "Leading technology solutions provider specializing in business hardware and networking equipment.",
   })
-  const [saving, setSaving] = useState(false)
-  const [message, setMessage] = useState('')
 
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/login')
-    }
-  }, [user, loading, router])
+  const teamMembers = [
+    {
+      name: "John Doe",
+      email: "john@abctech.com",
+      role: "Administrator",
+      status: "Active",
+      lastLogin: "2024-01-15",
+    },
+    {
+      name: "Jane Smith",
+      email: "jane@abctech.com",
+      role: "Purchaser",
+      status: "Active",
+      lastLogin: "2024-01-14",
+    },
+    {
+      name: "Mike Johnson",
+      email: "mike@abctech.com",
+      role: "Viewer",
+      status: "Pending",
+      lastLogin: "Never",
+    },
+  ]
 
-  useEffect(() => {
-    if (businessProfile) {
-      setFormData({
-        companyName: businessProfile.company_name || '',
-        businessType: businessProfile.business_type || '',
-        taxId: businessProfile.tax_id || '',
-        yearsInBusiness: businessProfile.years_in_business || '',
-        website: businessProfile.website || '',
-        contactName: businessProfile.contact_name || '',
-        jobTitle: businessProfile.job_title || '',
-        phone: businessProfile.phone || '',
-        addressLine1: businessProfile.address_line1 || '',
-        addressLine2: businessProfile.address_line2 || '',
-        city: businessProfile.city || '',
-        state: businessProfile.state || '',
-        postalCode: businessProfile.postal_code || '',
-        country: businessProfile.country || '',
-        monthlyVolume: businessProfile.monthly_volume || '',
-        productInterest: businessProfile.product_interest || '',
-      })
-    }
-  }, [businessProfile])
-
-  if (loading) {
-    return (
-      <div className="flex min-h-screen flex-col">
-        <header className="sticky top-0 z-50 w-full border-b bg-background">
-          <div className="container flex h-16 items-center">
-            <MainNav />
-          </div>
-        </header>
-        <main className="flex-1">
-          <div className="container py-12">
-            <div className="flex items-center justify-center">
-              <div className="text-center">
-                <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent mx-auto mb-4" />
-                <p>Loading profile...</p>
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
-    )
-  }
-
-  if (!user) {
-    return null
-  }
-
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setSaving(true)
-    setMessage('')
-
-    try {
-      const { error } = await updateBusinessProfile(user.id, {
-        company_name: formData.companyName,
-        business_type: formData.businessType,
-        tax_id: formData.taxId || null,
-        years_in_business: formData.yearsInBusiness,
-        website: formData.website || null,
-        contact_name: formData.contactName,
-        job_title: formData.jobTitle,
-        phone: formData.phone,
-        address_line1: formData.addressLine1,
-        address_line2: formData.addressLine2 || null,
-        city: formData.city,
-        state: formData.state,
-        postal_code: formData.postalCode,
-        country: formData.country,
-        monthly_volume: formData.monthlyVolume || null,
-        product_interest: formData.productInterest || null,
-      })
-
-      if (error) {
-        setMessage('Error updating profile. Please try again.')
-      } else {
-        setMessage('Profile updated successfully!')
-        await refreshProfile()
-      }
-    } catch (err) {
-      setMessage('An unexpected error occurred. Please try again.')
-    } finally {
-      setSaving(false)
-    }
+  const handleSave = () => {
+    setIsEditing(false)
+    // Here you would typically save to your backend
   }
 
   return (
@@ -146,241 +72,416 @@ export default function ProfilePage() {
       </header>
       <main className="flex-1">
         <div className="container py-8">
-          <div className="mb-8 flex items-center gap-2">
-            <Button variant="outline" size="icon" asChild>
-              <Link href="/dashboard">
-                <ArrowLeft className="h-4 w-4" />
-                <span className="sr-only">Back to dashboard</span>
-              </Link>
-            </Button>
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">Business Profile</h1>
-              <p className="text-muted-foreground">
-                Manage your business information and account settings
-              </p>
+              <h1 className="text-3xl font-bold tracking-tight">Account Profile</h1>
+              <p className="text-muted-foreground">Manage your business account information and settings</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Badge variant="outline" className="bg-green-50 text-green-700">
+                Verified Business
+              </Badge>
+              <Button variant="outline" asChild>
+                <Link href="/dashboard">Back to Dashboard</Link>
+              </Button>
             </div>
           </div>
 
-          <Card className="mx-auto max-w-2xl">
-            <CardHeader>
-              <CardTitle>Business Information</CardTitle>
-              <CardDescription>
-                Update your business details and contact information.
-              </CardDescription>
-            </CardHeader>
-            <form onSubmit={handleSubmit}>
-              <CardContent className="space-y-6">
-                {message && (
-                  <Alert className={message.includes('successfully') ? 'border-green-200 bg-green-50' : ''}>
-                    <AlertDescription className={message.includes('successfully') ? 'text-green-800' : ''}>
-                      {message}
-                    </AlertDescription>
-                  </Alert>
-                )}
+          <div className="mt-6">
+            <Tabs defaultValue="business" className="w-full">
+              <TabsList className="grid w-full grid-cols-5">
+                <TabsTrigger value="business">Business Info</TabsTrigger>
+                <TabsTrigger value="users">Team Members</TabsTrigger>
+                <TabsTrigger value="billing">Billing</TabsTrigger>
+                <TabsTrigger value="notifications">Notifications</TabsTrigger>
+                <TabsTrigger value="security">Security</TabsTrigger>
+              </TabsList>
 
-                <div className="space-y-4">
-                  <h3 className="text-lg font-medium">Company Details</h3>
-                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="company-name">Company Name</Label>
-                      <Input
-                        id="company-name"
-                        value={formData.companyName}
-                        onChange={(e) => handleInputChange('companyName', e.target.value)}
-                        required
-                      />
+              <TabsContent value="business" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <CardTitle className="flex items-center gap-2">
+                          <Building className="h-5 w-5" />
+                          Business Information
+                        </CardTitle>
+                        <CardDescription>Update your company details and contact information</CardDescription>
+                      </div>
+                      <Button
+                        variant={isEditing ? "default" : "outline"}
+                        onClick={() => (isEditing ? handleSave() : setIsEditing(true))}
+                      >
+                        {isEditing ? "Save Changes" : "Edit Profile"}
+                      </Button>
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="business-type">Business Type</Label>
-                      <Select value={formData.businessType} onValueChange={(value) => handleInputChange('businessType', value)}>
-                        <SelectTrigger id="business-type">
-                          <SelectValue placeholder="Select business type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="retailer">Retailer</SelectItem>
-                          <SelectItem value="reseller">Reseller</SelectItem>
-                          <SelectItem value="service-provider">Service Provider</SelectItem>
-                          <SelectItem value="educational">Educational Institution</SelectItem>
-                          <SelectItem value="government">Government</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="grid gap-4 md:grid-cols-2">
+                      <div className="space-y-2">
+                        <Label htmlFor="companyName">Company Name</Label>
+                        <Input
+                          id="companyName"
+                          value={profileData.companyName}
+                          onChange={(e) => setProfileData({ ...profileData, companyName: e.target.value })}
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="contactName">Primary Contact</Label>
+                        <Input
+                          id="contactName"
+                          value={profileData.contactName}
+                          onChange={(e) => setProfileData({ ...profileData, contactName: e.target.value })}
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="email">Email Address</Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          value={profileData.email}
+                          onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="phone">Phone Number</Label>
+                        <Input
+                          id="phone"
+                          type="tel"
+                          value={profileData.phone}
+                          onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="space-y-2 md:col-span-2">
+                        <Label htmlFor="address">Street Address</Label>
+                        <Input
+                          id="address"
+                          value={profileData.address}
+                          onChange={(e) => setProfileData({ ...profileData, address: e.target.value })}
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="city">City</Label>
+                        <Input
+                          id="city"
+                          value={profileData.city}
+                          onChange={(e) => setProfileData({ ...profileData, city: e.target.value })}
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="state">State</Label>
+                        <Input
+                          id="state"
+                          value={profileData.state}
+                          onChange={(e) => setProfileData({ ...profileData, state: e.target.value })}
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="zipCode">ZIP Code</Label>
+                        <Input
+                          id="zipCode"
+                          value={profileData.zipCode}
+                          onChange={(e) => setProfileData({ ...profileData, zipCode: e.target.value })}
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="businessType">Business Type</Label>
+                        <Select disabled={!isEditing}>
+                          <SelectTrigger>
+                            <SelectValue placeholder={profileData.businessType} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="reseller">Technology Reseller</SelectItem>
+                            <SelectItem value="integrator">System Integrator</SelectItem>
+                            <SelectItem value="consultant">IT Consultant</SelectItem>
+                            <SelectItem value="retailer">Retailer</SelectItem>
+                            <SelectItem value="other">Other</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="taxId">Tax ID (EIN)</Label>
+                        <Input
+                          id="taxId"
+                          value={profileData.taxId}
+                          onChange={(e) => setProfileData({ ...profileData, taxId: e.target.value })}
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="website">Website</Label>
+                        <Input
+                          id="website"
+                          type="url"
+                          value={profileData.website}
+                          onChange={(e) => setProfileData({ ...profileData, website: e.target.value })}
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="space-y-2 md:col-span-2">
+                        <Label htmlFor="description">Business Description</Label>
+                        <Textarea
+                          id="description"
+                          value={profileData.description}
+                          onChange={(e) => setProfileData({ ...profileData, description: e.target.value })}
+                          disabled={!isEditing}
+                          className="min-h-[100px]"
+                        />
+                      </div>
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="tax-id">Tax ID / Business Number</Label>
-                      <Input
-                        id="tax-id"
-                        value={formData.taxId}
-                        onChange={(e) => handleInputChange('taxId', e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="years-in-business">Years in Business</Label>
-                      <Select value={formData.yearsInBusiness} onValueChange={(value) => handleInputChange('yearsInBusiness', value)}>
-                        <SelectTrigger id="years-in-business">
-                          <SelectValue placeholder="Select years" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="0-1">Less than 1 year</SelectItem>
-                          <SelectItem value="1-3">1-3 years</SelectItem>
-                          <SelectItem value="3-5">3-5 years</SelectItem>
-                          <SelectItem value="5-10">5-10 years</SelectItem>
-                          <SelectItem value="10+">10+ years</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2 md:col-span-2">
-                      <Label htmlFor="website">Website</Label>
-                      <Input
-                        id="website"
-                        type="url"
-                        value={formData.website}
-                        onChange={(e) => handleInputChange('website', e.target.value)}
-                      />
-                    </div>
-                  </div>
-                </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
 
-                <div className="space-y-4">
-                  <h3 className="text-lg font-medium">Contact Information</h3>
-                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="contact-name">Contact Name</Label>
-                      <Input
-                        id="contact-name"
-                        value={formData.contactName}
-                        onChange={(e) => handleInputChange('contactName', e.target.value)}
-                        required
-                      />
+              <TabsContent value="users" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <CardTitle className="flex items-center gap-2">
+                          <Users className="h-5 w-5" />
+                          Team Members
+                        </CardTitle>
+                        <CardDescription>Manage user access and permissions for your account</CardDescription>
+                      </div>
+                      <Button>Invite User</Button>
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="job-title">Job Title</Label>
-                      <Input
-                        id="job-title"
-                        value={formData.jobTitle}
-                        onChange={(e) => handleInputChange('jobTitle', e.target.value)}
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Phone Number</Label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        value={formData.phone}
-                        onChange={(e) => handleInputChange('phone', e.target.value)}
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        value={user.email}
-                        disabled
-                        className="bg-muted"
-                      />
-                      <p className="text-xs text-muted-foreground">
-                        Email cannot be changed. Contact support if needed.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                  </CardHeader>
+                  <CardContent>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Name</TableHead>
+                          <TableHead>Email</TableHead>
+                          <TableHead>Role</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead>Last Login</TableHead>
+                          <TableHead></TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {teamMembers.map((member, index) => (
+                          <TableRow key={index}>
+                            <TableCell className="font-medium">{member.name}</TableCell>
+                            <TableCell>{member.email}</TableCell>
+                            <TableCell>
+                              <Badge variant="outline">{member.role}</Badge>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant={member.status === "Active" ? "default" : "secondary"}>
+                                {member.status}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>{member.lastLogin}</TableCell>
+                            <TableCell>
+                              <Button variant="ghost" size="sm">
+                                Edit
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </CardContent>
+                </Card>
+              </TabsContent>
 
-                <div className="space-y-4">
-                  <h3 className="text-lg font-medium">Business Address</h3>
-                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <div className="space-y-2 md:col-span-2">
-                      <Label htmlFor="address-line1">Address Line 1</Label>
-                      <Input
-                        id="address-line1"
-                        value={formData.addressLine1}
-                        onChange={(e) => handleInputChange('addressLine1', e.target.value)}
-                        required
-                      />
+              <TabsContent value="billing" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <CreditCard className="h-5 w-5" />
+                      Billing Information
+                    </CardTitle>
+                    <CardDescription>Manage your payment methods and billing preferences</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="grid gap-6 md:grid-cols-2">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="text-lg">Credit Summary</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div className="flex justify-between">
+                            <span>Credit Limit</span>
+                            <span className="font-medium">$50,000</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Available Credit</span>
+                            <span className="font-medium text-green-600">$35,750</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Current Balance</span>
+                            <span className="font-medium">$14,250</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Payment Terms</span>
+                            <span className="font-medium">Net 30</span>
+                          </div>
+                          <Button variant="outline" className="w-full bg-transparent" asChild>
+                            <Link href="/credit-line-application">Request Credit Increase</Link>
+                          </Button>
+                        </CardContent>
+                      </Card>
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="text-lg">Payment Methods</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div className="border rounded-lg p-4">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="font-medium">Business Checking</p>
+                                <p className="text-sm text-muted-foreground">****1234</p>
+                              </div>
+                              <Badge>Primary</Badge>
+                            </div>
+                          </div>
+                          <div className="border rounded-lg p-4">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="font-medium">Credit Card</p>
+                                <p className="text-sm text-muted-foreground">****5678</p>
+                              </div>
+                              <Button variant="ghost" size="sm">
+                                Edit
+                              </Button>
+                            </div>
+                          </div>
+                          <Button variant="outline" className="w-full bg-transparent">
+                            Add Payment Method
+                          </Button>
+                        </CardContent>
+                      </Card>
                     </div>
-                    <div className="space-y-2 md:col-span-2">
-                      <Label htmlFor="address-line2">Address Line 2 (Optional)</Label>
-                      <Input
-                        id="address-line2"
-                        value={formData.addressLine2}
-                        onChange={(e) => handleInputChange('addressLine2', e.target.value)}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="city">City</Label>
-                      <Input
-                        id="city"
-                        value={formData.city}
-                        onChange={(e) => handleInputChange('city', e.target.value)}
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="state">State / Province</Label>
-                      <Input
-                        id="state"
-                        value={formData.state}
-                        onChange={(e) => handleInputChange('state', e.target.value)}
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="postal-code">Postal Code</Label>
-                      <Input
-                        id="postal-code"
-                        value={formData.postalCode}
-                        onChange={(e) => handleInputChange('postalCode', e.target.value)}
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="country">Country</Label>
-                      <Select value={formData.country} onValueChange={(value) => handleInputChange('country', value)}>
-                        <SelectTrigger id="country">
-                          <SelectValue placeholder="Select country" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="us">United States</SelectItem>
-                          <SelectItem value="ca">Canada</SelectItem>
-                          <SelectItem value="mx">Mexico</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
 
-                <div className="space-y-4">
-                  <h3 className="text-lg font-medium">Additional Information</h3>
-                  <div className="space-y-2">
-                    <Label htmlFor="monthly-volume">Estimated Monthly Purchase Volume</Label>
-                    <Input
-                      id="monthly-volume"
-                      value={formData.monthlyVolume}
-                      onChange={(e) => handleInputChange('monthlyVolume', e.target.value)}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="product-interest">Products of Interest</Label>
-                    <Input
-                      id="product-interest"
-                      value={formData.productInterest}
-                      onChange={(e) => handleInputChange('productInterest', e.target.value)}
-                    />
-                  </div>
-                </div>
+              <TabsContent value="notifications" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Bell className="h-5 w-5" />
+                      Notification Preferences
+                    </CardTitle>
+                    <CardDescription>Choose how you want to receive updates and notifications</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium">Order Updates</p>
+                          <p className="text-sm text-muted-foreground">
+                            Notifications about order status, shipping, and delivery
+                          </p>
+                        </div>
+                        <Switch defaultChecked />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium">Payment Reminders</p>
+                          <p className="text-sm text-muted-foreground">
+                            Reminders about upcoming payments and due dates
+                          </p>
+                        </div>
+                        <Switch defaultChecked />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium">Product Updates</p>
+                          <p className="text-sm text-muted-foreground">
+                            New product announcements and availability updates
+                          </p>
+                        </div>
+                        <Switch />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium">Promotional Offers</p>
+                          <p className="text-sm text-muted-foreground">
+                            Special deals, discounts, and promotional campaigns
+                          </p>
+                        </div>
+                        <Switch />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium">Account Security</p>
+                          <p className="text-sm text-muted-foreground">
+                            Login alerts and security-related notifications
+                          </p>
+                        </div>
+                        <Switch defaultChecked />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
 
-                <div className="flex justify-end">
-                  <Button type="submit" disabled={saving}>
-                    <Save className="mr-2 h-4 w-4" />
-                    {saving ? "Saving..." : "Save Changes"}
-                  </Button>
-                </div>
-              </CardContent>
-            </form>
-          </Card>
+              <TabsContent value="security" className="space-y-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Shield className="h-5 w-5" />
+                      Security Settings
+                    </CardTitle>
+                    <CardDescription>Manage your account security and access controls</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium">Two-Factor Authentication</p>
+                          <p className="text-sm text-muted-foreground">
+                            Add an extra layer of security to your account
+                          </p>
+                        </div>
+                        <Button variant="outline" className="bg-transparent">
+                          Enable
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium">Password</p>
+                          <p className="text-sm text-muted-foreground">Last changed 30 days ago</p>
+                        </div>
+                        <Button variant="outline" className="bg-transparent">
+                          Change Password
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium">Login Sessions</p>
+                          <p className="text-sm text-muted-foreground">Manage active sessions and devices</p>
+                        </div>
+                        <Button variant="outline" className="bg-transparent">
+                          View Sessions
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium">API Access</p>
+                          <p className="text-sm text-muted-foreground">Generate API keys for system integration</p>
+                        </div>
+                        <Button variant="outline" className="bg-transparent" asChild>
+                          <Link href="/api">Manage API Keys</Link>
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
       </main>
       <Footer />

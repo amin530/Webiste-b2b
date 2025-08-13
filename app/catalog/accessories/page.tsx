@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowLeft, Search } from 'lucide-react'
+import { ArrowLeft, Search } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -17,14 +17,14 @@ const accessoriesData = [
     id: "acc-1",
     name: "Logitech MX Master 3S",
     sku: "910-006556",
-    image: "/logitech-mx-master-mouse.png",
+    image: "/images/logitech-mx-master-mouse.png",
     description: "Advanced wireless mouse with ultra-fast scrolling and app-specific customization",
     category: "accessories",
     brand: "logitech",
     price: 99,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "acc-2",
@@ -36,8 +36,8 @@ const accessoriesData = [
     brand: "dell",
     price: 249,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "acc-3",
@@ -49,8 +49,8 @@ const accessoriesData = [
     brand: "logitech",
     price: 129,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "acc-4",
@@ -62,8 +62,8 @@ const accessoriesData = [
     brand: "anker",
     price: 79,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "acc-5",
@@ -75,8 +75,8 @@ const accessoriesData = [
     brand: "belkin",
     price: 299,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "acc-6",
@@ -88,8 +88,8 @@ const accessoriesData = [
     brand: "jabra",
     price: 199,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "acc-7",
@@ -101,8 +101,8 @@ const accessoriesData = [
     brand: "cable matters",
     price: 29,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "acc-8",
@@ -114,8 +114,8 @@ const accessoriesData = [
     brand: "kensington",
     price: 349,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "acc-9",
@@ -127,8 +127,8 @@ const accessoriesData = [
     brand: "logitech",
     price: 89,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "acc-10",
@@ -141,8 +141,8 @@ const accessoriesData = [
     price: 49,
     specifications: {
       storage: "128GB",
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "acc-11",
@@ -154,8 +154,8 @@ const accessoriesData = [
     brand: "targus",
     price: 69,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "acc-12",
@@ -167,8 +167,8 @@ const accessoriesData = [
     brand: "apc",
     price: 199,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
 ]
 
@@ -230,16 +230,18 @@ function AccessoriesContent() {
               {filteredAccessories.length === 0 && (
                 <div className="text-center py-12">
                   <p className="text-muted-foreground">No accessories match your current filters.</p>
-                  <Button 
-                    variant="outline" 
-                    className="mt-4"
-                    onClick={() => updateFilters({ 
-                      categories: [], 
-                      brands: [], 
-                      specifications: {},
-                      priceRange: [0, 5000],
-                      searchQuery: ''
-                    })}
+                  <Button
+                    variant="outline"
+                    className="mt-4 bg-transparent"
+                    onClick={() =>
+                      updateFilters({
+                        categories: [],
+                        brands: [],
+                        specifications: {},
+                        priceRange: [0, 5000],
+                        searchQuery: "",
+                      })
+                    }
                   >
                     Clear Filters
                   </Button>

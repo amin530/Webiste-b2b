@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowLeft, Search } from 'lucide-react'
+import { ArrowLeft, Search } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -17,7 +17,7 @@ const serversData = [
     id: "server-1",
     name: "Dell PowerEdge R750",
     sku: "PER750-001",
-    image: "/dell-poweredge-server.png",
+    image: "/images/dell-poweredge-server.png",
     description: "2U rack server with Intel Xeon Scalable processors, up to 32 DIMM slots",
     category: "servers",
     brand: "dell",
@@ -26,8 +26,8 @@ const serversData = [
       ram: "32GB",
       storage: "2TB",
       processor: "Intel Xeon",
-      graphics: "Integrated"
-    }
+      graphics: "Integrated",
+    },
   },
   {
     id: "server-2",
@@ -42,8 +42,8 @@ const serversData = [
       ram: "16GB",
       storage: "1TB",
       processor: "Intel Xeon",
-      graphics: "Integrated"
-    }
+      graphics: "Integrated",
+    },
   },
   {
     id: "server-3",
@@ -58,8 +58,8 @@ const serversData = [
       ram: "64GB",
       storage: "4TB",
       processor: "Intel Xeon",
-      graphics: "Integrated"
-    }
+      graphics: "Integrated",
+    },
   },
   {
     id: "server-4",
@@ -74,8 +74,8 @@ const serversData = [
       ram: "128GB",
       storage: "8TB",
       processor: "Intel Xeon",
-      graphics: "Integrated"
-    }
+      graphics: "Integrated",
+    },
   },
   {
     id: "server-5",
@@ -90,8 +90,8 @@ const serversData = [
       ram: "16GB",
       storage: "1TB",
       processor: "Intel Xeon",
-      graphics: "Integrated"
-    }
+      graphics: "Integrated",
+    },
   },
   {
     id: "server-6",
@@ -106,8 +106,8 @@ const serversData = [
       ram: "32GB",
       storage: "2TB",
       processor: "Intel Xeon",
-      graphics: "Integrated"
-    }
+      graphics: "Integrated",
+    },
   },
   {
     id: "server-7",
@@ -122,8 +122,8 @@ const serversData = [
       ram: "8GB",
       storage: "1TB",
       processor: "Intel Xeon",
-      graphics: "Integrated"
-    }
+      graphics: "Integrated",
+    },
   },
   {
     id: "server-8",
@@ -138,8 +138,8 @@ const serversData = [
       ram: "32GB",
       storage: "1TB",
       processor: "Intel Xeon",
-      graphics: "Integrated"
-    }
+      graphics: "Integrated",
+    },
   },
 ]
 
@@ -201,16 +201,18 @@ function ServersContent() {
               {filteredServers.length === 0 && (
                 <div className="text-center py-12">
                   <p className="text-muted-foreground">No servers match your current filters.</p>
-                  <Button 
-                    variant="outline" 
-                    className="mt-4"
-                    onClick={() => updateFilters({ 
-                      categories: [], 
-                      brands: [], 
-                      specifications: {},
-                      priceRange: [0, 5000],
-                      searchQuery: ''
-                    })}
+                  <Button
+                    variant="outline"
+                    className="mt-4 bg-transparent"
+                    onClick={() =>
+                      updateFilters({
+                        categories: [],
+                        brands: [],
+                        specifications: {},
+                        priceRange: [0, 5000],
+                        searchQuery: "",
+                      })
+                    }
                   >
                     Clear Filters
                   </Button>

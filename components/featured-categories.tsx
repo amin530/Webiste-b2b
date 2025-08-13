@@ -7,37 +7,37 @@ export function FeaturedCategories() {
   const categories = [
     {
       name: "Laptops",
-      image: "/business-laptops.png",
+      image: "/images/business-laptops.png",
       href: "/catalog/laptops",
       description: "Business laptops, workstations, and accessories",
     },
     {
       name: "Networking",
-      image: "/networking-equipment-setup.png",
+      image: "/images/networking-equipment-setup.png",
       href: "/catalog/networking",
       description: "Routers, switches, and networking equipment",
     },
     {
       name: "Accessories",
-      image: "/computer-accessories-flatlay.png",
+      image: "/images/computer-accessories-flatlay.png",
       href: "/catalog/accessories",
       description: "Cables, adapters, and peripherals",
     },
     {
       name: "Gaming",
-      image: "/gaming-setup.png",
+      image: "/images/gaming-setup.png",
       href: "/catalog/gaming",
       description: "Gaming PCs, consoles, and accessories",
     },
     {
       name: "Servers",
-      image: "/placeholder-mw50g.png",
+      image: "/images/server-rack.png",
       href: "/catalog/servers",
       description: "Enterprise servers and storage solutions",
     },
     {
       name: "Displays",
-      image: "/computer-monitors.png",
+      image: "/images/computer-monitors.png",
       href: "/catalog/displays",
       description: "Monitors, digital signage, and projectors",
     },
@@ -49,12 +49,7 @@ export function FeaturedCategories() {
         <Link key={category.name} href={category.href}>
           <Card className="overflow-hidden transition-all hover:shadow-md">
             <div className="aspect-video relative">
-              <Image
-                src={category.image || "/placeholder.svg"}
-                alt={category.name}
-                fill
-                className="object-cover"
-              />
+              <Image src={category.image || "/placeholder.svg"} alt={category.name} fill className="object-cover" />
             </div>
             <CardContent className="p-4">
               <h3 className="text-lg font-semibold">{category.name}</h3>

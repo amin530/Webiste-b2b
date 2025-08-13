@@ -1,100 +1,58 @@
-'use client'
+"use client"
 
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { Label } from "@/components/ui/label"
+
 import Link from "next/link"
-import { AlertCircle, CheckCircle2, Clock, Package, ShoppingCart, TrendingUp } from 'lucide-react'
+import { Package, TrendingUp, CreditCard, Bell, Search, Filter } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { MainNav } from "@/components/main-nav"
 import { Footer } from "@/components/footer"
-import { useAuth } from "@/contexts/auth-context"
 
 export default function DashboardPage() {
-  const { user, businessProfile, loading } = useAuth()
-  const router = useRouter()
+  const recentOrders = [
+    {
+      id: "ORD-2024-001",
+      date: "2024-01-15",
+      status: "Shipped",
+      total: 2450.0,
+      items: 5,
+    },
+    {
+      id: "ORD-2024-002",
+      date: "2024-01-12",
+      status: "Delivered",
+      total: 1875.5,
+      items: 3,
+    },
+    {
+      id: "ORD-2024-003",
+      date: "2024-01-10",
+      status: "Processing",
+      total: 3200.0,
+      items: 8,
+    },
+    {
+      id: "ORD-2024-004",
+      date: "2024-01-08",
+      status: "Delivered",
+      total: 950.0,
+      items: 2,
+    },
+  ]
 
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/login')
-    }
-  }, [user, loading, router])
-
-  if (loading) {
-    return (
-      <div className="flex min-h-screen flex-col">
-        <header className="sticky top-0 z-50 w-full border-b bg-background">
-          <div className="container flex h-16 items-center">
-            <MainNav />
-          </div>
-        </header>
-        <main className="flex-1">
-          <div className="container py-12">
-            <div className="flex items-center justify-center">
-              <div className="text-center">
-                <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent mx-auto mb-4" />
-                <p>Loading dashboard...</p>
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
-    )
+  const accountSummary = {
+    creditLimit: 50000,
+    availableCredit: 35750,
+    currentBalance: 14250,
+    nextPaymentDue: "2024-02-15",
+    nextPaymentAmount: 8500,
   }
-
-  if (!user) {
-    return null
-  }
-
-  const getStatusAlert = () => {
-    if (!businessProfile) {
-      return (
-        <Alert>
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription>
-            Business profile not found. Please contact support.
-          </AlertDescription>
-        </Alert>
-      )
-    }
-
-    switch (businessProfile.status) {
-      case 'pending':
-        return (
-          <Alert>
-            <Clock className="h-4 w-4" />
-            <AlertDescription>
-              Your business account is under review. Our team will contact you within 2 business days to complete the verification process.
-            </AlertDescription>
-          </Alert>
-        )
-      case 'approved':
-        return (
-          <Alert className="border-green-200 bg-green-50">
-            <CheckCircle2 className="h-4 w-4 text-green-600" />
-            <AlertDescription className="text-green-800">
-              Your business account has been approved! You now have access to wholesale pricing and can place orders.
-            </AlertDescription>
-          </Alert>
-        )
-      case 'rejected':
-        return (
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription>
-              Your business account application was not approved. Please contact our sales team for more information.
-            </AlertDescription>
-          </Alert>
-        )
-      default:
-        return null
-    }
-  }
-
-  const isApproved = businessProfile?.status === 'approved'
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -107,183 +65,315 @@ export default function DashboardPage() {
         <div className="container py-8">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">
-                Welcome back, {businessProfile?.contact_name || 'User'}
-              </h1>
-              <p className="text-muted-foreground">
-                {businessProfile?.company_name && `${businessProfile.company_name} • `}
-                Manage your wholesale account and orders
-              </p>
+              <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+              <p className="text-muted-foreground">Welcome back! Here's an overview of your account activity.</p>
             </div>
             <div className="flex items-center gap-2">
-              <Badge variant="outline" className={
-                businessProfile?.status === 'approved' ? 'bg-green-50 text-green-700' :
-                businessProfile?.status === 'pending' ? 'bg-yellow-50 text-yellow-700' :
-                'bg-red-50 text-red-700'
-              }>
-                {businessProfile?.status === 'approved' ? 'Approved' :
-                 businessProfile?.status === 'pending' ? 'Pending' :
-                 'Rejected'}
-              </Badge>
+              <Button variant="outline" size="icon">
+                <Bell className="h-4 w-4" />
+                <span className="sr-only">Notifications</span>
+              </Button>
+              <Button asChild>
+                <Link href="/catalog">Browse Products</Link>
+              </Button>
             </div>
-          </div>
-
-          <div className="mt-6">
-            {getStatusAlert()}
           </div>
 
           <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Account Status</CardTitle>
-                <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
+                <CardTitle className="text-sm font-medium">Available Credit</CardTitle>
+                <CreditCard className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold capitalize">
-                  {businessProfile?.status || 'Unknown'}
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  Business verification status
-                </p>
+                <div className="text-2xl font-bold">${accountSummary.availableCredit.toLocaleString()}</div>
+                <p className="text-xs text-muted-foreground">of ${accountSummary.creditLimit.toLocaleString()} limit</p>
               </CardContent>
             </Card>
+
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
-                <ShoppingCart className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">0</div>
-                <p className="text-xs text-muted-foreground">
-                  Orders placed this month
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Products Available</CardTitle>
-                <Package className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {isApproved ? '1,200+' : '---'}
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  Wholesale products in catalog
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Savings</CardTitle>
+                <CardTitle className="text-sm font-medium">Current Balance</CardTitle>
                 <TrendingUp className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
-                  {isApproved ? '$0' : '---'}
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  Total savings this month
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="mt-6 grid gap-6 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Quick Actions</CardTitle>
-                <CardDescription>
-                  Common tasks and shortcuts for your account
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Button className="w-full justify-start" variant="outline" asChild>
-                  <Link href={isApproved ? "/catalog" : "/login"}>
-                    <Package className="mr-2 h-4 w-4" />
-                    {isApproved ? "Browse Products" : "View Catalog (Login Required)"}
-                  </Link>
-                </Button>
-                <Button className="w-full justify-start" variant="outline" asChild>
-                  <Link href="/profile">
-                    <CheckCircle2 className="mr-2 h-4 w-4" />
-                    Update Profile
-                  </Link>
-                </Button>
-                <Button className="w-full justify-start" variant="outline" asChild>
-                  <Link href="/contact">
-                    <AlertCircle className="mr-2 h-4 w-4" />
-                    Contact Support
-                  </Link>
-                </Button>
+                <div className="text-2xl font-bold">${accountSummary.currentBalance.toLocaleString()}</div>
+                <p className="text-xs text-muted-foreground">Due {accountSummary.nextPaymentDue}</p>
               </CardContent>
             </Card>
 
             <Card>
-              <CardHeader>
-                <CardTitle>Account Information</CardTitle>
-                <CardDescription>
-                  Your business account details
-                </CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Recent Orders</CardTitle>
+                <Package className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="font-medium">Company</p>
-                    <p className="text-muted-foreground">{businessProfile?.company_name || 'Not provided'}</p>
-                  </div>
-                  <div>
-                    <p className="font-medium">Business Type</p>
-                    <p className="text-muted-foreground capitalize">{businessProfile?.business_type || 'Not provided'}</p>
-                  </div>
-                  <div>
-                    <p className="font-medium">Contact</p>
-                    <p className="text-muted-foreground">{businessProfile?.contact_name || 'Not provided'}</p>
-                  </div>
-                  <div>
-                    <p className="font-medium">Email</p>
-                    <p className="text-muted-foreground">{user.email}</p>
-                  </div>
-                </div>
-                <Button variant="outline" className="w-full" asChild>
-                  <Link href="/profile">
-                    View Full Profile
-                  </Link>
-                </Button>
+              <CardContent>
+                <div className="text-2xl font-bold">{recentOrders.length}</div>
+                <p className="text-xs text-muted-foreground">This month</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Next Payment</CardTitle>
+                <CreditCard className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">${accountSummary.nextPaymentAmount.toLocaleString()}</div>
+                <p className="text-xs text-muted-foreground">Due in 12 days</p>
               </CardContent>
             </Card>
           </div>
 
-          {!isApproved && (
-            <div className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Next Steps</CardTitle>
-                  <CardDescription>
-                    Complete these steps to activate your wholesale account
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center space-x-2">
-                    <CheckCircle2 className="h-5 w-5 text-green-600" />
-                    <span className="text-sm">Account created</span>
+          <div className="mt-6">
+            <Tabs defaultValue="orders" className="w-full">
+              <TabsList className="grid w-full grid-cols-4">
+                <TabsTrigger value="orders">Recent Orders</TabsTrigger>
+                <TabsTrigger value="invoices">Invoices</TabsTrigger>
+                <TabsTrigger value="account">Account</TabsTrigger>
+                <TabsTrigger value="support">Support</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="orders" className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-medium">Order History</h3>
+                  <div className="flex items-center gap-2">
+                    <div className="relative">
+                      <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                      <Input type="search" placeholder="Search orders..." className="w-[200px] pl-8" />
+                    </div>
+                    <Button variant="outline" size="icon">
+                      <Filter className="h-4 w-4" />
+                    </Button>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <CheckCircle2 className="h-5 w-5 text-green-600" />
-                    <span className="text-sm">Business information submitted</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Clock className="h-5 w-5 text-yellow-600" />
-                    <span className="text-sm">Awaiting business verification</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Clock className="h-5 w-5 text-gray-400" />
-                    <span className="text-sm text-muted-foreground">Access to wholesale pricing</span>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          )}
+                </div>
+                <Card>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Order ID</TableHead>
+                        <TableHead>Date</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Items</TableHead>
+                        <TableHead className="text-right">Total</TableHead>
+                        <TableHead></TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {recentOrders.map((order) => (
+                        <TableRow key={order.id}>
+                          <TableCell className="font-medium">{order.id}</TableCell>
+                          <TableCell>{new Date(order.date).toLocaleDateString()}</TableCell>
+                          <TableCell>
+                            <Badge
+                              variant={
+                                order.status === "Delivered"
+                                  ? "default"
+                                  : order.status === "Shipped"
+                                    ? "secondary"
+                                    : "outline"
+                              }
+                            >
+                              {order.status}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>{order.items} items</TableCell>
+                          <TableCell className="text-right">${order.total.toLocaleString()}</TableCell>
+                          <TableCell>
+                            <Button variant="ghost" size="sm" asChild>
+                              <Link href={`/orders/${order.id}`}>View</Link>
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </Card>
+                <div className="flex justify-center">
+                  <Button variant="outline" asChild>
+                    <Link href="/orders">View All Orders</Link>
+                  </Button>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="invoices" className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-medium">Invoice Management</h3>
+                  <Button variant="outline" asChild>
+                    <Link href="/invoices">View All Invoices</Link>
+                  </Button>
+                </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Outstanding Invoices</CardTitle>
+                      <CardDescription>Invoices requiring payment</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">${accountSummary.currentBalance.toLocaleString()}</div>
+                      <p className="text-sm text-muted-foreground mt-2">3 invoices due within 30 days</p>
+                      <Button className="mt-4" asChild>
+                        <Link href="/invoices/outstanding">Pay Now</Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Payment History</CardTitle>
+                      <CardDescription>Recent payment activity</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-sm">Last Payment</span>
+                          <span className="text-sm font-medium">$5,250.00</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm">Payment Date</span>
+                          <span className="text-sm">Jan 15, 2024</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm">Payment Method</span>
+                          <span className="text-sm">ACH Transfer</span>
+                        </div>
+                      </div>
+                      <Button variant="outline" className="mt-4 w-full bg-transparent" asChild>
+                        <Link href="/payments/history">View History</Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="account" className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-medium">Account Information</h3>
+                  <Button variant="outline" asChild>
+                    <Link href="/profile">Edit Profile</Link>
+                  </Button>
+                </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Credit Summary</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="flex justify-between">
+                        <span>Credit Limit</span>
+                        <span className="font-medium">${accountSummary.creditLimit.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Available Credit</span>
+                        <span className="font-medium text-green-600">
+                          ${accountSummary.availableCredit.toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Current Balance</span>
+                        <span className="font-medium">${accountSummary.currentBalance.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Payment Terms</span>
+                        <span className="font-medium">Net 30</span>
+                      </div>
+                      <Button variant="outline" className="w-full bg-transparent" asChild>
+                        <Link href="/credit-line-application">Request Credit Increase</Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Account Settings</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-2">
+                        <Label className="text-sm font-medium">Notifications</Label>
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm">Order Updates</span>
+                            <Badge variant="secondary">Enabled</Badge>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm">Payment Reminders</span>
+                            <Badge variant="secondary">Enabled</Badge>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm">Product Updates</span>
+                            <Badge variant="outline">Disabled</Badge>
+                          </div>
+                        </div>
+                      </div>
+                      <Button variant="outline" className="w-full bg-transparent" asChild>
+                        <Link href="/profile/settings">Manage Settings</Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="support" className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-medium">Support & Resources</h3>
+                  <Button asChild>
+                    <Link href="/contact">Contact Support</Link>
+                  </Button>
+                </div>
+                <div className="grid gap-4 md:grid-cols-3">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Quick Help</CardTitle>
+                      <CardDescription>Common questions and resources</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <Button variant="ghost" className="w-full justify-start" asChild>
+                        <Link href="/faq">Frequently Asked Questions</Link>
+                      </Button>
+                      <Button variant="ghost" className="w-full justify-start" asChild>
+                        <Link href="/warranty-returns">Returns & Warranties</Link>
+                      </Button>
+                      <Button variant="ghost" className="w-full justify-start" asChild>
+                        <Link href="/terms">Credit Terms</Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Account Support</CardTitle>
+                      <CardDescription>Get help with your account</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <Button variant="ghost" className="w-full justify-start" asChild>
+                        <a href="tel:+18005551234">Call: (800) 555-1234</a>
+                      </Button>
+                      <Button variant="ghost" className="w-full justify-start" asChild>
+                        <a href="mailto:support@techwholesale.com">Email Support</a>
+                      </Button>
+                      <Button variant="ghost" className="w-full justify-start" asChild>
+                        <Link href="/contact">Submit Ticket</Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Resources</CardTitle>
+                      <CardDescription>Helpful tools and information</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <Button variant="ghost" className="w-full justify-start" asChild>
+                        <Link href="/catalog">Product Catalog</Link>
+                      </Button>
+                      <Button variant="ghost" className="w-full justify-start" asChild>
+                        <Link href="/news">Latest Updates</Link>
+                      </Button>
+                      <Button variant="ghost" className="w-full justify-start" asChild>
+                        <Link href="/about">About Us</Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
       </main>
       <Footer />

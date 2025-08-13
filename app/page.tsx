@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { ChevronRight, Search, ShieldCheck, TrendingUp, Truck } from 'lucide-react'
+import { ChevronRight, Search, ShieldCheck, TrendingUp, Truck } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -47,7 +47,8 @@ export default function Home() {
                     Wholesale Electronics for Your Business
                   </h1>
                   <p className="max-w-[600px] text-gray-500 md:text-xl">
-                    Access premium electronics at competitive wholesale prices. Exclusive for verified business customers.
+                    Access premium electronics at competitive wholesale prices. Exclusive for verified business
+                    customers.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -63,7 +64,7 @@ export default function Home() {
               </div>
               <div className="flex items-center justify-center">
                 <Image
-                  src="/placeholder-7yppi.png"
+                  src="/images/placeholder-hero.png"
                   alt="Wholesale Electronics Distribution"
                   width={600}
                   height={400}
@@ -81,7 +82,8 @@ export default function Home() {
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Trusted Brands</h2>
                 <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  We source directly from trusted distributors and industry leaders to ensure genuine products, competitive pricing, and fast fulfillment.
+                  We source directly from trusted distributors and industry leaders to ensure genuine products,
+                  competitive pricing, and fast fulfillment.
                 </p>
               </div>
             </div>
@@ -129,9 +131,7 @@ export default function Home() {
                   <Truck className="h-8 w-8 text-slate-800" />
                 </div>
                 <h3 className="text-xl font-bold">Fast & Reliable Shipping</h3>
-                <p className="text-gray-500">
-                  Quick order processing and shipping to meet your business timeline.
-                </p>
+                <p className="text-gray-500">Quick order processing and shipping to meet your business timeline.</p>
               </div>
             </div>
           </div>
@@ -146,7 +146,7 @@ export default function Home() {
                     Become a Partner Today
                   </h2>
                   <p className="max-w-[600px] text-gray-300 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    {""}
+                    Join thousands of businesses who trust us for their electronics procurement needs.
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -155,14 +155,19 @@ export default function Home() {
                       Apply Now <ChevronRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
-                  <Button size="lg" variant="outline" className="border-white text-black hover:bg-black hover:text-slate-900" asChild>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-white text-black hover:bg-black hover:text-slate-900 bg-transparent"
+                    asChild
+                  >
                     <Link href="/terms">Learn About Terms</Link>
                   </Button>
                 </div>
               </div>
               <div className="flex items-center justify-center">
                 <Image
-                  src="/business-partnership-handshake.png"
+                  src="/images/business-partnership-handshake.png"
                   alt="Business Partnership"
                   width={600}
                   height={400}

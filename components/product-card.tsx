@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { ShoppingCart, Heart } from 'lucide-react'
+import { ShoppingCart, Heart } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
@@ -49,13 +49,9 @@ export function ProductCard({ product }: ProductCardProps) {
           <span className="text-xs text-muted-foreground">{product.sku}</span>
         </div>
         <Link href={`/catalog/product/${product.id}`}>
-          <h3 className="font-semibold leading-tight hover:underline">
-            {product.name}
-          </h3>
+          <h3 className="font-semibold leading-tight hover:underline">{product.name}</h3>
         </Link>
-        <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
-          {product.description}
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{product.description}</p>
         {product.specifications && (
           <div className="mt-3 flex flex-wrap gap-1">
             {product.specifications.ram && (
@@ -79,12 +75,8 @@ export function ProductCard({ product }: ProductCardProps) {
       <CardFooter className="p-4 pt-0">
         <div className="flex w-full items-center justify-between">
           <div className="flex flex-col">
-            {product.price && (
-              <span className="text-lg font-bold">${product.price.toLocaleString()}</span>
-            )}
-            <span className="text-xs text-muted-foreground capitalize">
-              {product.brand}
-            </span>
+            {product.price && <span className="text-lg font-bold">${product.price.toLocaleString()}</span>}
+            <span className="text-xs text-muted-foreground capitalize">{product.brand}</span>
           </div>
           <div className="flex gap-2">
             <Button size="sm" variant="outline">

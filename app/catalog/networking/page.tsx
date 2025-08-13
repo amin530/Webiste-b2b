@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowLeft, Search } from 'lucide-react'
+import { ArrowLeft, Search } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -17,27 +17,27 @@ const networkingData = [
     id: "net-1",
     name: "Cisco Catalyst 9300-24T",
     sku: "C9300-24T-A",
-    image: "/cisco-logo.png",
+    image: "/images/cisco-logo.png",
     description: "24-port Gigabit Ethernet managed switch with advanced security features",
     category: "networking",
     brand: "cisco",
     price: 2499,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "net-2",
     name: "Ubiquiti UniFi Dream Machine",
     sku: "UDM-US",
-    image: "/ubiquiti-unifi-switch.png",
+    image: "/images/ubiquiti-unifi-switch.png",
     description: "All-in-one security gateway with built-in controller and 8-port switch",
     category: "networking",
     brand: "ubiquiti",
     price: 379,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "net-3",
@@ -49,8 +49,8 @@ const networkingData = [
     brand: "netgear",
     price: 299,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "net-4",
@@ -62,8 +62,8 @@ const networkingData = [
     brand: "cisco",
     price: 695,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "net-5",
@@ -75,8 +75,8 @@ const networkingData = [
     brand: "ubiquiti",
     price: 399,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "net-6",
@@ -88,8 +88,8 @@ const networkingData = [
     brand: "sonicwall",
     price: 449,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "net-7",
@@ -101,8 +101,8 @@ const networkingData = [
     brand: "asus",
     price: 349,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "net-8",
@@ -114,8 +114,8 @@ const networkingData = [
     brand: "fortinet",
     price: 599,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "net-9",
@@ -127,8 +127,8 @@ const networkingData = [
     brand: "aruba",
     price: 199,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
   {
     id: "net-10",
@@ -140,8 +140,8 @@ const networkingData = [
     brand: "netgear",
     price: 899,
     specifications: {
-      graphics: "N/A"
-    }
+      graphics: "N/A",
+    },
   },
 ]
 
@@ -167,7 +167,9 @@ function NetworkingContent() {
             </Button>
             <div>
               <h1 className="text-3xl font-bold tracking-tight">Networking Equipment</h1>
-              <p className="text-muted-foreground">Enterprise routers, switches, access points, and security appliances</p>
+              <p className="text-muted-foreground">
+                Enterprise routers, switches, access points, and security appliances
+              </p>
             </div>
           </div>
 
@@ -203,16 +205,18 @@ function NetworkingContent() {
               {filteredNetworking.length === 0 && (
                 <div className="text-center py-12">
                   <p className="text-muted-foreground">No networking equipment matches your current filters.</p>
-                  <Button 
-                    variant="outline" 
-                    className="mt-4"
-                    onClick={() => updateFilters({ 
-                      categories: [], 
-                      brands: [], 
-                      specifications: {},
-                      priceRange: [0, 5000],
-                      searchQuery: ''
-                    })}
+                  <Button
+                    variant="outline"
+                    className="mt-4 bg-transparent"
+                    onClick={() =>
+                      updateFilters({
+                        categories: [],
+                        brands: [],
+                        specifications: {},
+                        priceRange: [0, 5000],
+                        searchQuery: "",
+                      })
+                    }
                   >
                     Clear Filters
                   </Button>

@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, Check, FileText, ShoppingCart } from 'lucide-react'
+import { ArrowLeft, Check, FileText } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -22,15 +22,16 @@ export default function ProductPage({ params }: ProductPageProps) {
     id: params.id,
     name: "Dell XPS 13 Laptop",
     sku: "DXPS13-9310",
-    image: "/dell-xps-laptop.png",
+    image: "/images/dell-xps-laptop.png",
     images: [
-      "/dell-xps-laptop-front.png",
+      "/images/dell-xps-laptop-front.png",
       "/placeholder.svg?height=100&width=100",
       "/placeholder.svg?height=100&width=100",
       "/placeholder.svg?height=100&width=100",
     ],
     description: "13-inch business laptop with Intel Core i7, 16GB RAM, 512GB SSD",
-    longDescription: "The Dell XPS 13 is a premium ultraportable laptop designed for business professionals. Featuring the latest Intel Core i7 processor, 16GB of RAM, and a fast 512GB SSD, this laptop delivers exceptional performance for all your business needs. The 13.4-inch InfinityEdge display provides stunning visuals with minimal bezels, while the compact design ensures maximum portability. With up to 12 hours of battery life, this laptop is perfect for professionals on the go.",
+    longDescription:
+      "The Dell XPS 13 is a premium ultraportable laptop designed for business professionals. Featuring the latest Intel Core i7 processor, 16GB of RAM, and a fast 512GB SSD, this laptop delivers exceptional performance for all your business needs. The 13.4-inch InfinityEdge display provides stunning visuals with minimal bezels, while the compact design ensures maximum portability. With up to 12 hours of battery life, this laptop is perfect for professionals on the go.",
     category: "Laptops",
     brand: "Dell",
     specifications: [
@@ -41,8 +42,6 @@ export default function ProductPage({ params }: ProductPageProps) {
       { name: "Graphics", value: "Intel Iris Xe Graphics" },
       { name: "Operating System", value: "Windows 11 Pro" },
       { name: "Battery", value: "52WHr, up to 12 hours" },
-      { name: "Weight", value: "2.8 lbs (1.27 kg)" },
-      {  value: "52WHr, up to 12 hours" },
       { name: "Weight", value: "2.8 lbs (1.27 kg)" },
       { name: "Dimensions", value: "11.6 x 7.8 x 0.58 inches" },
       { name: "Ports", value: "2x Thunderbolt 4, 1x headphone jack" },
@@ -144,14 +143,10 @@ export default function ProductPage({ params }: ProductPageProps) {
                   </p>
                   <div className="mt-4 flex flex-col gap-2 sm:flex-row">
                     <Button className="w-full" asChild>
-                      <Link href="/login">
-                        Login
-                      </Link>
+                      <Link href="/login">Login</Link>
                     </Button>
-                    <Button variant="outline" className="w-full" asChild>
-                      <Link href="/register">
-                        Register
-                      </Link>
+                    <Button variant="outline" className="w-full bg-transparent" asChild>
+                      <Link href="/register">Register</Link>
                     </Button>
                   </div>
                 </div>
@@ -163,7 +158,7 @@ export default function ProductPage({ params }: ProductPageProps) {
               </div>
 
               <div className="flex flex-col gap-2 sm:flex-row">
-                <Button variant="outline" className="w-full" asChild>
+                <Button variant="outline" className="w-full bg-transparent" asChild>
                   <Link href={product.datasheet}>
                     <FileText className="mr-2 h-4 w-4" /> Download Datasheet
                   </Link>
